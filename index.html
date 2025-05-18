@@ -61,11 +61,11 @@
         <label><span class="material-symbols-rounded">dark_mode</span><md-switch id="themeToggle"></md-switch></label>
     </header>
     <main>
-        <div class="gradient-background" style="height: 35vh; margin: 0; padding: 16px 24px 0px 24px; display: flex; border-radius: 0; align-items: end;">
+        <div class="gradient-background" style="height: 45vh; margin: 0; padding: 48px 24px 0px 24px; display: flex; border-radius: 0; align-items: end;">
             <div>
-                <h6 style="padding: 0;">To contiue downloading blueprints,</h6>
+                <h6 style="padding: 8px 0px 0px 0px;">To contiue downloading blueprints,</h6>
                 <p class="md-typescale-display-small" id="version-header" style="padding: 8px 0px; margin: 0;"></p>
-                <div class="grid-container">
+                <div class="grid-container" style="width: 75%;">
                     <a class="large-button" id="grid-child" href="https://app.sflightx.com/bp">
                         <p>Continue in Browser</p>
                     </a>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="secondary-container" id="main">
-            <div style="text-align: center; grid-gap: 24px;">
+            <div style="text-align: center; grid-gap: 24px; width: 85%;">
                 <div id="latest-release"></div>
             </div>
         </div>
@@ -126,10 +126,10 @@
                 versionHeader.textContent = `Download SFlightX App ${data.name}`;
                 releaseDiv.style.display = 'flex';
                 releaseDiv.style.flexDirection = 'column';
-                releaseDiv.style.alignItems = 'center';
+                releaseDiv.style.alignItems = 'start';
                 releaseDiv.innerHTML = `
                 <div style="width: 100%; text-align: left;">${marked.parse(data.body)}</div>
-                <md-outlined-button style="margin: 24px;" href="${data.html_url}" target="_blank">View on GitHub</md-outlined-button>
+                <md-outlined-button style="margin: 24px 0px;" href="${data.html_url}" target="_blank">View on GitHub</md-outlined-button>
                 `;
                 if (data.assets.length > 0) {
                     data.assets.forEach(asset => {
@@ -137,6 +137,7 @@
                         link.href = asset.browser_download_url;
                         link.textContent = `Download ${asset.name}`;
                         link.target = '_blank';
+                        link.style.width = 50%
                         releaseDiv.appendChild(link);
                         releaseDiv.appendChild(document.createElement('br'));
                     });
