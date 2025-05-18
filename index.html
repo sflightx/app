@@ -7,23 +7,21 @@
     <meta name="author" content="SFlightX">
     <meta name="version_date" content="04-23-2025">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <meta name="description"
-        content="We provide high quality services for your JNO Payloads to Droo, or Earth and beyond!">
+    <meta name="description" content="We provide high quality services for your JNO Payloads to Droo, or Earth and beyond!">
     <meta name="keywords" content="SFlightX, App, Tutorial, Help, Spaceflight Simulator, Juno: New Origins">
     <meta property="og:image" content="https://sflightx.com/resources/static/logo.png" />
     <meta property="og:url" content="sflightx.com" />
-
+    
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@SFlightXJNO" />
     <meta name="twitter:title" content="sFlightX" />
-    <meta name="twitter:description"
-        content="We provide high quality services for your JNO Payloads to Droo, or Earth and beyond!" />
+    <meta name="twitter:description" content="We provide high quality services for your JNO Payloads to Droo, or Earth and beyond!" />
     <meta name="twitter:image" content="https://sflightx.com/resources/static/logo.png" />
     <title>SFlightX</title>
     <link rel="icon" type="image/png" href="https://sflightx.com/resources/static/logo.png">
-
+    
     <script type="importmap">
-    {
+        {
       "imports": {
         "@material/web/": "https://esm.run/@material/web/"
       }
@@ -35,7 +33,7 @@
         document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+    
     <link rel="stylesheet" href="https://sflightx.com/resources/design/material-imports.css" />
     <link rel="stylesheet" href="https://sflightx.com/resources/design/material-primary.css" />
     <link rel="stylesheet" href="https://sflightx.com/resources/design/material-secondary.css" />
@@ -63,19 +61,30 @@
         <label><span class="material-symbols-rounded">dark_mode</span><md-switch id="themeToggle"></md-switch></label>
     </header>
     <main>
-        <div style="height: 10vh;"></div>
-
-        <div class="banner" style="text-align: center; grid-gap: 24px;">
-            <h3 class="md-typescale-display-small" id="version-header"></h3>
-            <!-- Place this tag where you want the button to render. -->
-            <div id="latest-release"></div>
+        <div class="gradient-background" style="height: 35vh; margin: 0; padding: 16px 24px 0px 24px; display: flex; border-radius: 0; align-items: end;">
+            <div>
+                <h6 style="padding: 0;">To contiue downloading blueprints,</h6>
+                <p class="md-typescale-display-small" id="version-header" style="padding: 8px 0px; margin: 0;"></p>
+                <div class="grid-container">
+                    <a class="large-button" id="grid-child" href="https://app.sflightx.com/bp">
+                        <p>Continue in Browser</p>
+                    </a>
+                    <a class="large-button" id="grid-child" href="#latest-release">
+                        <p>Join Beta</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="secondary-container" id="main">
+            <div style="text-align: center; grid-gap: 24px;">
+                <div id="latest-release"></div>
+            </div>
         </div>
         <footer>
             <div id="horizontal-footer">
-
+                
                 <div id="footer-logo">
-                    <a href="https://sflightx.com"><img id="footer-logo"
-                            src="https://sflightx.com/resources/static/logo.png" alt="sFlightX Logo" /></a>
+                    <a href="https://sflightx.com"><img id="footer-logo" src="https://sflightx.com/resources/static/logo.png" alt="sFlightX Logo" /></a>
                     <p class="md-typescale-body-medium">SFlightX is not affiliated with Spaceflight Simulator or Juno:
                         New
                         Origins. This website is not affiliated with Space Exploration Technologies (SpaceX).</p>
@@ -83,42 +92,32 @@
                 </div>
                 <div id="legal-link">
                     <div id="icon-link">
-                        <a href="https://x.com/SFlightXJNO"><img
-                                src="https://img.icons8.com/?size=100&id=Q33YQBzI2lZs&format=png&color=FFFFFF"
-                                class="footer-link-img"></a>
-                        <a href="https://youtube.com/@sflightx"><img
-                                src="https://img.icons8.com/?size=100&id=85162&format=png&color=FFFFFF"
-                                class="footer-link-img"></a>
-                        <a href="https://facebook.com/sflightx"><img
-                                src="https://img.icons8.com/?size=100&id=85126&format=png&color=FFFFFF"
-                                class="footer-link-img"></a>
-                        <a href="https://bsky.app/profile/sflightx.com"><img
-                                src="https://img.icons8.com/?size=100&id=MGqlXOe8ksH0&format=png&color=FFFFFF"
-                                class="footer-link-img"></a>
-                        <a href="https://simplerockets.com/u/sflightx"><img
-                                src="https://img.icons8.com/?size=100&id=COgXDnufRVRP&format=png&color=FFFFFF"
-                                class="footer-link-img"></a>
+                        <a href="https://x.com/SFlightXJNO"><img src="https://img.icons8.com/?size=100&id=Q33YQBzI2lZs&format=png&color=FFFFFF" class="footer-link-img"></a>
+                        <a href="https://youtube.com/@sflightx"><img src="https://img.icons8.com/?size=100&id=85162&format=png&color=FFFFFF" class="footer-link-img"></a>
+                        <a href="https://facebook.com/sflightx"><img src="https://img.icons8.com/?size=100&id=85126&format=png&color=FFFFFF" class="footer-link-img"></a>
+                        <a href="https://bsky.app/profile/sflightx.com"><img src="https://img.icons8.com/?size=100&id=MGqlXOe8ksH0&format=png&color=FFFFFF" class="footer-link-img"></a>
+                        <a href="https://simplerockets.com/u/sflightx"><img src="https://img.icons8.com/?size=100&id=COgXDnufRVRP&format=png&color=FFFFFF" class="footer-link-img"></a>
                     </div>
                     <div class="text-link">
                         <a href="https://sflightx.com/legal/terms" target="_self">Terms of Service</a>
                         <a href="https://sflightx.com/legal/privacy" target="_self">Privacy Policy</a>
                     </div>
                 </div>
-
+                
             </div>
         </footer>
     </main>
-
+    
     <script src="https://sflightx.com/resources/function/drawer.js"></script>
     <script src="https://sflightx.com/resources/function/scroll.js"></script>
     <script src="https://sflightx.com/resources/function/theme-mode.js"></script>
     <script src="https://sflightx.com/resources/data/main-navigation.js"></script>
     <script src="https://sflightx.com/resources/function/bp/blueprint_loader.js"></script>
-
+    
     <script>
         const owner = "sflightx";
         const repo = "sflightx-app";
-
+        
         fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
             .then(response => response.json())
             .then(data => {
@@ -129,9 +128,9 @@
                 releaseDiv.style.flexDirection = 'column';
                 releaseDiv.style.alignItems = 'center';
                 releaseDiv.innerHTML = `
-        <div class="container" style="width: 75vw; text-align: left;">${marked.parse(data.body)}</div>
-        <md-outlined-button style="margin: 8px;" href="${data.html_url}" target="_blank">View on GitHub</md-outlined-button>
-      `;
+                <div style="width: 100%; text-align: left;">${marked.parse(data.body)}</div>
+                <md-outlined-button style="margin: 24px;" href="${data.html_url}" target="_blank">View on GitHub</md-outlined-button>
+                `;
                 if (data.assets.length > 0) {
                     data.assets.forEach(asset => {
                         const link = document.createElement('md-filled-tonal-button');
@@ -142,12 +141,33 @@
                         releaseDiv.appendChild(document.createElement('br'));
                     });
                 }
-
+                
             })
             .catch(err => {
                 console.error("Error loading release:", err);
             });
     </script>
+    <style>
+        .gradient-background {
+            background: linear-gradient(59deg, #cc330d, #00a0fa, #3d198f, #d66ead, #17e537);
+            background-size: 300% 300%;
+            animation: gradient-animation 45s ease infinite;
+        }
+        
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            
+            50% {
+                background-position: 100% 50%;
+            }
+            
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
