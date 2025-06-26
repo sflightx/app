@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="version" content="1.4">
+    <meta name="author" content="SFlightX">
+    <meta name="version_date" content="04-23-2025">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="Create or modify launch manifest in JNO through SFlightX.">
+    <meta name="keywords" content="SFlightX, App, Tutorial, Help, Spaceflight Simulator, Juno: New Origins">
+    <meta property="og:image" content="https://sflightx.com/resources/v4/database/logo/logo.png" />
+    <meta property="og:url" content="app.sflightx.com/bp" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@SFlightXJNO" />
+    <meta name="twitter:title" content="sFlightX" />
+    <meta name="twitter:description" content="Create or modify launch manifest in JNO through SFlightX." />
+    <meta name="twitter:image" content="https://sflightx.com/resources/v4/database/logo/logo.png" />
+    <title>Manifest - SFlightX</title>
+    <link rel="icon" type="image/png" href="https://sflightx.com/resources/v4/database/logo/logo.png">
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+    <script type="module">
+        import '@material/web/all.js';
+        import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+    </script>
+    <style>
+
+        #data {
+            display: flex;
+        }
+
+        #profile-img {
+            height: 20vh;
+            border-radius: 50%;
+        }
+
+        #company-header {
+            min-height: 25vh;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            #company-header {
+                flex-direction: row;
+            }
+        }
+
+        [child] {
+            background-color: var(--md-sys-color-surface-container-low);
+            width: 100%;
+            flex: 1;
+        }
+
+        [important] {
+            flex: 4;
+        }
+
+        [desktop-gap] {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://sflightx.com/resources/v4/element/material-dependency.css" />
+</head>
+
+<body>
+    <div id="side-sheet">
+        <div id="side-sheet-header">
+            <h3 class="md-typescale-headline-small">SFlightX</h3>
+            <span class="material-symbols-rounded" onclick="toggleSideSheet()">close</span>
+        </div>
+        <nav id="navItems"></nav>
+    </div>
+    <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden" onclick="toggleSideSheet()"></div>
+    <header>
+        <div class="logo">
+            <span class="material-symbols-rounded" onclick="toggleSideSheet()" id="menu">menu</span>
+            <a href="https://sflightx.com">
+                <img id="logo" src="https://sflightx.com/resources/v4/database/logo/logo.png" alt="sFlightX Logo" />
+            </a>
+        </div>
+        <div id="action-bar">
+            <label><span class="material-symbols-rounded">dark_mode</span><md-switch
+                    id="themeToggle"></md-switch></label>
+            <div id="profile"></div>
+        </div>
+    </header>
+    <main>
+        <div id="data">
+            <div important>
+                <div id="company-header" indent="allS">
+                    <div indent="all">
+                        <img id="profile-img" src="" alt="" indent="vertical">
+                        <p class="md-typescale-body-large" id="description" indent="vertical"></p>
+                        <md-chip-set id="chip"></md-chip-set>
+                    </div>
+                </div>
+                <md-tabs>
+                    <md-primary-tab>Launches</md-primary-tab>
+                    <md-primary-tab>Vehicles</md-primary-tab>
+                    <md-primary-tab>Launch Pads</md-primary-tab>
+                </md-tabs>
+            </div>
+            <div child>
+
+            </div>
+        </div>
+        <sflightx-footer></sflightx-footer>
+    </main>
+    <script type="module" src="https://sflightx.com/resources/v4/function/serviceAuth/initializeFirebase.js"></script>
+    <script src="https://sflightx.com/resources/v4/dependency.js"></script>
+    <script type="module">
+        import { renderNavigation } from 'https://sflightx.com/resources/v4/data/drawer/nav-loader.js';
+        import { navData } from 'https://sflightx.com/resources/v4/data/drawer/sflightx_com/index.js';
+        renderNavigation(navData);
+    </script>
+    <script type="module" src="https://sflightx.com/resources/v4/function/profile.js"></script>
+    <script type="module">
+        import { db, auth } from 'https://sflightx.com/resources/v4/function/serviceAuth/initializeFirebase.js';
+        import { ref, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) return;
+
+            // Get companyId from user data
+            const userDataRef = ref(db, `userdata/${user.uid}`);
+            const userDataSnap = await get(userDataRef);
+            if (!userDataSnap.exists()) {
+                console.error('No user data found.');
+                return;
+            }
+            const data = userDataSnap.val();
+            const companyId = data.companyId;
+
+            const companyRef = ref(db, `static/company/${companyId}`);
+            const companySnap = await get(companyRef);
+            if (companySnap.exists()) {
+                const companyData = companySnap.val();
+                if (companyData.thumbnail) {
+                    const profileImg = document.getElementById('profile-img');
+                    profileImg.src = companyData.thumbnail;
+                    profileImg.alt = `Company ${companyId} Thumbnail`;
+                }
+                if (companyData.desc) {
+                    const desc = document.getElementById('description');
+                    desc.textContent = companyData.desc;
+                }
+                if (companyData.link) {
+                    // Efficiently add chips for each link in companyData.link, no icon
+                    const chipSet = document.getElementById('chip');
+                    if (chipSet && companyData.link) {
+                        for (const [key, url] of Object.entries(companyData.link)) {
+                            const chip = document.createElement('md-suggestion-chip');
+                            const label = key.charAt(0).toUpperCase() + key.slice(1);
+                            chip.textContent = label;
+                            chip.setAttribute('href', url);
+                            chip.setAttribute('target', '_blank');
+                            chipSet.appendChild(chip);
+                        }
+                    }
+                }
+            }
+
+            // Get list of launches for the company
+            const launchesRef = ref(db, `launch_manifest/company/${companyId}`);
+            const launchesSnap = await get(launchesRef);
+            if (!launchesSnap.exists()) {
+                console.log('No launches found for this company.');
+                return;
+            }
+            const launches = launchesSnap.val();
+            // launches is an object: { key1: {...}, key2: {...}, ... }
+            console.log('Launches:', launches);
+
+            // Example: display launch keys in console
+            Object.keys(launches).forEach(key => {
+                console.log(`Launch key: ${key}`, launches[key]);
+            });
+        });
+    </script>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</body>
+
+</html>
