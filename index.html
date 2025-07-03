@@ -29,6 +29,7 @@
         }
     }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module">
         import '@material/web/all.js';
         import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
@@ -79,6 +80,11 @@
                 </md-filled-tonal-button>
             </div>
         </div>
+        <div class="content" desktop-gap>
+            <h3 class="md-typescale-display-small" id="version-header"></h3>
+            <!-- Place this tag where you want the button to render. -->
+            <div id="latest-release"></div>
+        </div>
         <sflightx-footer></sflightx-footer>
     </main>
 
@@ -88,8 +94,44 @@
         import { navData } from 'https://sflightx.com/resources/v4/data/drawer/sflightx_com/index.js';
         renderNavigation(navData);
     </script>
+    
+    <script>
+        const owner = "sflightx";
+        const repo = "sflightx-app";
+
+        fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`)
+            .then(response => response.json())
+            .then(data => {
+                const releaseDiv = document.getElementById('latest-release');
+                const versionHeader = document.getElementById('version-header');
+                versionHeader.textContent = `Download SFlightX App ${data.name}`;
+                versionHeader.style.textAlign = 'center';
+                versionHeader.style.marginBottom = '16px';
+                releaseDiv.style.display = 'flex';
+                releaseDiv.style.flexDirection = 'column';
+                releaseDiv.style.alignItems = 'center';
+                releaseDiv.innerHTML = `
+        <div class="container" indent="all" shape="rounded" style="width: 75vw; text-align: left;">${marked.parse(data.body)}</div>
+        <md-outlined-button style="margin: 8px;" href="${data.html_url}" target="_blank">View on GitHub</md-outlined-button>
+      `;
+                if (data.assets.length > 0) {
+                    data.assets.forEach(asset => {
+                        const link = document.createElement('md-filled-tonal-button');
+                        link.href = asset.browser_download_url;
+                        link.textContent = `Download ${asset.name}`;
+                        link.target = '_blank';
+                        releaseDiv.appendChild(link);
+                        releaseDiv.appendChild(document.createElement('br'));
+                    });
+                }
+
+            })
+            .catch(err => {
+                console.error("Error loading release:", err);
+            });
+    </script>
+    
     <script src="https://sflightx.com/resources/function/bp/blueprint_loader.js"></script>
-    <script src="https://sflightx.com/resources/function/release/getGitHubRelease.js"></script>
     <script type="module" src="https://sflightx.com/resources/v4/function/profile.js"></script>
 </body>
 
