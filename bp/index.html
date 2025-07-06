@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta name="description" content="Browse our collection of Spaceflight Simulator Blueprints and Payloads.">
     <meta name="keywords" content="SFlightX, App, Tutorial, Help, Spaceflight Simulator, Juno: New Origins">
-    <meta property="og:image" content="https://sflightx.com/resources/static/logo.png" />
+    <meta property="og:image" content="https://sflightx.com/resources/v4/database/logo/logo.png" />
     <meta property="og:url" content="app.sflightx.com/bp" />
 
     <meta name="twitter:card" content="summary" />
@@ -17,9 +17,9 @@
     <meta name="twitter:title" content="sFlightX" />
     <meta name="twitter:description"
         content="Browse our collection of Spaceflight Simulator Blueprints and Payloads." />
-    <meta name="twitter:image" content="https://sflightx.com/resources/static/logo.png" />
+    <meta name="twitter:image" content="https://sflightx.com/resources/v4/database/logo/logo.png" />
     <title>SFlightX</title>
-    <link rel="icon" type="image/png" href="https://sflightx.com/resources/static/logo.png">
+    <link rel="icon" type="image/png" href="https://sflightx.com/resources/v4/database/logo/logo.png">
 
     <script type="importmap">
     {
@@ -34,7 +34,142 @@
         document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     </script>
     <style>
-        
+        #-data, #-item {
+            padding: 8px;
+        }
+        #loading-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--md-sys-color-surface-container-low);
+            z-index: 1;
+        }
+
+        [animate="zoom-in"]:hover {
+            animation: zoom-in 0.3s ease-in-out forwards;
+        }
+
+        [animate="zoom-in"] {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        [animate="zoom-in"]:not(:hover) {
+            animation: zoom-out 0.3s ease-in-out forwards;
+        }
+
+        @keyframes zoom-in {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.01);
+            }
+        }
+
+        @keyframes zoom-out {
+            from {
+                transform: scale(1.01);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        #banner {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--md-sys-color-primary-container);
+            width: 100%;
+            padding: 1rem;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        #banner-img {
+            margin: 0px auto;
+            width: 75vw;
+            border-radius: 24px;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+        }
+
+        #app-bar-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .-item-container {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: 24px;            
+        }
+
+        :root {
+            --md-linear-progress-track-height: 12px;
+            --md-linear-progress-active-indicator-height: 12px;
+            --md-linear-progress-track-shape: 16px;
+        }
+
+        [column] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        [row] {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        [vertical-align="center"] {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        [weight="1"] {
+            flex: 1;
+        }
+
+        [weight="2"] {
+            flex: 2;
+        }
+
+        [weight="3"] {
+            flex: 3;
+        }
+
+        [weight="4"] {
+            flex: 4;
+        }
+
+        [weight="5"] {
+            flex: 5;
+        }
+
+        #-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        @media (min-width: 768px) {
+            #loaderpage-header {
+                display: flex;
+                height: 100%;
+            }
+
+            #loaderpage[half] {
+                justify-content: center;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://sflightx.com/resources/v4/element/layout/element/bp/design.css" />
     <link rel="stylesheet" href="https://sflightx.com/resources/v4/element/material-dependency.css" />
@@ -64,23 +199,137 @@
     </header>
 
     <main>
-        <div>
-            <div id="data"></div>
+        <div id="loading-page">
+            <md-circular-progress indeterminate
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></md-circular-progress>
         </div>
-        <div id="item" indent="all"></div>
-        <div id="errormsg"></div>
-        <div id="home"></div>
+
+        <div id="home-page" column style="display: none;">
+            <div id="banner">
+                <a animate="zoom-in" href="https://app.sflightx.com/"
+                    style="position: relative; width: 75vw; margin: 0 auto;">
+                    <img id="banner-img"
+                        src="https://sflightx.com/resources/v4/database/image/app_sflightx_com/sflightx_app_0_02.png"
+                        alt="SFlightX Logo" style="opacity: 0.75;">
+                    <p class="md-typescale-body-medium" indent="horizontal"
+                        style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; margin: 0; padding: 1rem; border-radius: 0 0 24px 24px;">
+                        Browse our collection of Spaceflight Simulator Blueprints in-app
+                    </p>
+                </a>
+
+            </div>
+            <div indent="all" row>
+                <div vertical-align="center">
+                    <h4 indent="horizontal" class="md-typescale-title-large">Uploaded Blueprints</h4>
+                    <p indent="horizontal" class="md-typescale-body-medium">Top 10 recent blueprints</p>
+                </div>
+                <!--md-filled-tonal-button id="uploadBlueprintButton" class="md-typescale-label-large"
+                    onclick="window.location.href='#upload';">
+                    <span class="material-symbols-rounded">arrow_forward</span></md-filled-tonal-button-->
+            </div>
+            <div id="home">
+                <div id="main-data"></div>
+            </div>
+        </div>
+
+        <div id="loader-page" half>
+            <div id="loaderpage-header">
+                <div id="-data" weight="3"></div>
+                <div id="-item" weight="4"></div>
+            </div>
+            <div id="loaderpage-content"></div>
+            <div indent="all" row>
+                <div vertical-align="center">
+                    <h4 indent="horizontal" class="md-typescale-title-large">More from the author</h4>
+                </div>
+                <md-filled-tonal-button id="uploadBlueprintButton" class="md-typescale-label-large"
+                    onclick="window.location.href='#upload';">
+                    <span class="material-symbols-rounded">arrow_forward</span></md-filled-tonal-button>
+            </div>
+            <div id="authorpage" indent="all"></div>
+        </div>
+
+        </div>
+
+        <div id="nav-page" style="display: none;"></div>
+
+        <div id="error-page" style="display: none;"></div>
+
         <sflightx-footer></sflightx-footer>
     </main>
 
     <script type="module" src="https://sflightx.com/resources/v4/function/serviceAuth/initializeFirebase.js"></script>
-    <script type="module" src="https://sflightx.com/resources/v4/function/bp/blueprint_loader.js"></script>
     <script src="https://sflightx.com/resources/v4/dependency.js"></script>
-    <script type="module">
-        import { renderNavigation } from 'https://sflightx.com/resources/v4/data/drawer/nav-loader.js';
-        import { navData } from 'https://sflightx.com/resources/v4/data/drawer/sflightx_com/index.js';
-        renderNavigation(navData);
-    </script>
+       
+    <script type="module">
+        import { getBlueprint } from 'https://sflightx.com/resources/v4/function/bp/getBlueprint.js';
+        import { renderHome, renderBlueprint, getBlueprintById } from 'https://sflightx.com/resources/v4/function/bp/renderData.js';
+
+        const homePageContainer = document.getElementById("home-page");
+        const loaderPageContainer = document.getElementById("loader-page");
+        const navPageContainer = document.getElementById("nav-page");
+        const errorPageContainer = document.getElementById("error-page");
+        const loadingPageContainer = document.getElementById("loading-page");
+        const mainDiv = document.getElementById('main-data');
+
+        async function loadBlueprints() {
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+
+            if (id) {
+                const blueprint = await getBlueprintById(id);
+                await renderBlueprint(id, blueprint);
+                enableContainer(loaderPageContainer);
+
+                return;
+            }
+
+            function enableContainer(container) {
+                loadingPageContainer.style.display = "none";
+                homePageContainer.style.display = "none";
+                loaderPageContainer.style.display = "none";
+                navPageContainer.style.display = "none";
+                errorPageContainer.style.display = "none";
+                container.style.display = "";
+            }
+
+            try {
+                const blueprints = await getBlueprint(10, "upload/blueprint");
+                mainDiv.innerHTML = '';
+                if (Array.isArray(blueprints) && blueprints.length > 0) {
+                    blueprints.forEach(bp => {
+                        console.log("Rendering blueprint:", bp);
+                        renderHome(bp.key, bp, mainDiv, "horizontal");
+
+                        enableContainer(homePageContainer);
+                    });
+                } else if (blueprints) {
+                    renderHome(blueprints.key, blueprints, mainDiv, "horizontal");
+                    enableContainer(homePageContainer);
+
+                    card.addEventListener("click", () => {
+                        if (bp.key) {
+                            enableContainer(loaderPageContainer);
+                            setTimeout(() => {
+                                window.location.href = `?id=${bp.key}`;
+                            }, 250);
+                        }
+                    });
+
+                } else {
+                    mainDiv.innerHTML = `<p style="text-align:center;">No blueprints found.</p>`;
+                }
+            } catch (e) {
+                mainDiv.innerHTML = `<p style="color:red;text-align:center;">Failed to load blueprints.</p>`;
+            }
+        }
+        loadBlueprints();
+
+        import { renderNavigation } from 'https://sflightx.com/resources/v4/data/drawer/nav-loader.js';
+        import { navData } from 'https://sflightx.com/resources/v4/data/drawer/sflightx_com/index.js';
+        renderNavigation(navData);
+    </script>
 </body>
 
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
